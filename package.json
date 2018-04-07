@@ -1,0 +1,8 @@
+{
+  "name": "koa-ve",
+  "version": "1.0.0",
+  "description": "Vé: asynchronous server side rendering of JSX using Koa",
+  "main": "index.js",
+  "author": "siverv",
+  "license": "ISC",
+}
