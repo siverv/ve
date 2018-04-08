@@ -5,4 +5,8 @@
   "main": "index.js",
   "author": "siverv",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siverv/ve.git"
+  },
 }

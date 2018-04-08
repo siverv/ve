@@ -46,13 +46,13 @@ is quite noticable, after all.
 #### Use as middleware
 
 ```javascript
-app.use(require('ve').engine)
+app.use(require('ve').render)
 ```
 
 #### Write HTML components with JSX
-All attribute names are written in the usual HTML-way, using double quotes, with the value's double-quotes escaped. There is white-list of valid attribute names in in `Ve.config` taken from [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes) which determines what will be visible, also allowing `/^data-[\w-]*$/` and `/^on\w+$/`.
+All attribute names are written in the usual HTML-way, using double quotes, with the value's double-quotes escaped. There is white-list of valid attribute names in `Ve.config` taken from [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes) which determines what will be visible, also allowing `/^data-[\w-]*$/` and `/^on\w+$/`.
 
-The configuration object also includes lists of empty elements (`br`, `input`, etc) which do not display its children, and preformatted elements (`textarea`, `pre`) which filters away non-string children.
+The configuration object also includes lists of tag-names for empty elements (`br`, `input`, etc) which do not display its children, and preformatted elements (`textarea`, `pre`) which filters away non-string children.
 
 ```javascript
 const Ve = require('ve');
