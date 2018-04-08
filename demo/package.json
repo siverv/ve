@@ -13,6 +13,7 @@
     "babel-plugin-transform-react-jsx": "^6.24.1"
   },
   "dependencies": {
-    "koa": "^2.5.0"
+    "koa": "^2.5.0",
+    "koa-ve": "^1.0.0"
   }
 }

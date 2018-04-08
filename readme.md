@@ -5,6 +5,10 @@
 
 React's JSX is a pleasant enough way to write HTML, but when rendering server side, the whole shebang with states and JS-style attributes is needlessly complicated. Vé, named after the norse god which gave the original stick-figure-humans shapes and senses, is a small project to give simple JSX-support through Koa without distraction.
 
+```sh
+npm install --save koa-ve
+```
+
 #### Configured for [Koa](http://koajs.com/)
 
 The renderer is written with Koa's `ctx` and `next` in mind. While technically not a requirement, the alternative is to write your own middleware using `Ve.engine`, which takes a writable stream and the component to render as its first two arguments. All later arguments will be available to the component-functions.
@@ -46,7 +50,7 @@ is quite noticable, after all.
 #### Use as middleware
 
 ```javascript
-app.use(require('ve').render)
+app.use(require('koa-ve').render)
 ```
 
 #### Write HTML components with JSX
@@ -55,7 +59,7 @@ All attribute names are written in the usual HTML-way, using double quotes, with
 The configuration object also includes lists of tag-names for empty elements (`br`, `input`, etc) which do not display its children, and preformatted elements (`textarea`, `pre`) which filters away non-string children.
 
 ```javascript
-const Ve = require('ve');
+const Ve = require('koa-ve');
 async function MyDiv (ctx) {
   return <div {...this.attr} class={"my-div " + this.attr.class}>
     {this.children}
@@ -70,7 +74,7 @@ The following example can be found as `demo/demo.jsx`.
 
 ```javascript
 const Koa = require('koa');
-const Ve = require('../index.js');
+const Ve = require('koa-ve');
  
 async function Component (ctx) {
   ctx.state.title = "Component - " + ctx.state.title;

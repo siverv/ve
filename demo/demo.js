@@ -1,5 +1,5 @@
 const Koa = require('koa');
-const Ve = require('../index.js');
+const Ve = require('koa-ve');
 
 async function Component(ctx) {
   ctx.state.title = "Component - " + ctx.state.title;
