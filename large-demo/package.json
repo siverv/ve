@@ -1,0 +1,28 @@
+{
+  "name": "koa-ve-demo2",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "babel src -d lib && node server.js",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "start": "src/*"
+  },
+  "author": "siverv",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "npm-watch": "^0.3.0"
+  },
+  "dependencies": {
+    "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^4.0.2",
+    "koa-ve": "^1.0.0",
+    "markdown-it": "^8.4.1"
+  }
+}

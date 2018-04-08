@@ -1,6 +1,6 @@
 {
   "name": "koa-ve",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vé: asynchronous server side rendering of JSX using Koa",
   "main": "index.js",
   "author": "siverv",

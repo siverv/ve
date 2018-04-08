@@ -3,7 +3,7 @@
 ## Vé
 ### Asynchronous server side rendering of [JSX](https://babeljs.io/docs/plugins/transform-react-jsx/) using [Koa](http://koajs.com/)
 
-React's JSX is a pleasant enough way to write HTML, but when rendering server side, the whole shebang with states and JS-style attributes is needlessly complicated. Vé, named after the norse god which gave the original stick-figure-humans shapes and senses, is a small project to give simple JSX-support through Koa without distraction.
+React's JSX is a pleasant enough way to write HTML, but when rendering server side, the whole shebang with states and JS-style attributes is needlessly complicated. Vé, named after the norse god who gave the original stick-figure-humans shapes and senses, is a small project to give simple JSX-support through Koa without distraction.
 
 ```sh
 npm install --save koa-ve
@@ -70,7 +70,7 @@ async function MyDiv (ctx) {
 
 #### All together
 
-The following example can be found as `demo/demo.jsx`.
+The following example can be found as `small-demo/demo.jsx`.
 
 ```javascript
 const Koa = require('koa');

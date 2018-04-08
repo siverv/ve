@@ -95,7 +95,9 @@ const Ve = {
     ctx.body.write(config.doctype)
     let component = await next();
     await Ve.engine(ctx.body, component, ...arguments);
-    ctx.body.end();
+    if(ctx.body.writable){
+      ctx.body.end();
+    }
   }
 }
 

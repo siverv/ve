@@ -1,0 +1,413 @@
+:root {
+  --success: #3a5;
+  --success-text: white;
+  --danger: tomato;
+  --danger-text: white;
+  --warning: orange;
+  --warning-text: white;
+  --info: steelblue;
+  --info-text: white;
+  --focus-border: #2586ef;
+}
+
+body {
+  margin: 0;
+  font-family: garamond;
+}
+*  {
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+main {
+  width:600px;
+  min-height: 361px;
+  margin: 0 auto;
+
+}
+footer {
+  position: relative;
+  width: 100%;
+  margin-top: 50px;
+  padding-top: 20px;
+  font-size: 0.75em;
+  height: 250px;
+  background-color: #222;
+  color: #eee;
+  text-align:center;
+}
+
+footer a {
+  text-decoration:none;
+  color:steelblue;  
+}
+
+header {
+  width:600px;
+  margin: 0 auto;
+}
+
+header h1 {
+  font-size: 50px;
+  margin-left: 10px;
+  margin-right: 20px;
+  margin-bottom: 5px;
+  text-align: left
+  color: steelblue;
+}
+
+header h1 a {
+  text-decoration:none;
+  color:steelblue;
+}
+header h1 a:hover {
+  color: #555;
+}
+
+header h3 {
+  color: #666;
+  margin-left: 30px;
+  margin-top: 10px;
+  font-size: 20px;
+
+}
+
+/***************
+** FORM / INPUT
+*/
+
+label[for] {
+  cursor: pointer;
+}
+
+.input-group {
+  padding-top: 10px;
+}
+
+.input-group .checkbox {
+  margin: 10px;
+}
+.input-group .input {
+  margin: 20px 10px;
+}
+
+.input,
+.input-group {
+  border: 1px solid #999;
+  border-radius: 5px;
+  position: relative;
+  margin: 20px 0;
+  height: auto;
+}
+
+.input label,
+.input-group legend {
+  height: 1em;
+  padding: 0 5px;
+  background-color: #FFF;
+  text-shadow: 0 1px 0 #FFF;
+  color: #666;
+  font-weight: 100;
+  position: absolute;
+  top: -0.6em; left: 10px;
+  max-width: calc(100% - 30px);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.input input[type="text"],
+.input input[type="date"],
+.input input[type="password"],
+.input select,
+.input textarea {
+  background-color: inherit;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  box-shadow: none;
+  padding: 15px 20px;
+  border-radius: 5px 5px 0 0;
+  font-size: inherit;
+}
+.input input[type="text"]:last-child,
+.input input[type="date"]:last-child,
+.input input[type="password"]:last-child,
+.input select,
+.input textarea:last-child {
+  border-radius: 5px;
+}
+
+.input textarea {
+  overflow:visible;
+  resize:vertical;
+  min-height: 10em;
+}
+
+.input-group .message,
+.input .message {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px 10px;
+}
+.input-group .messages .message:first-child,
+.input .messages .message:first-child {
+  border-radius: 0 0 0 0;
+}
+.input-group .messages .message:first-child:last-child,
+.input .messages .message:first-child:last-child {
+  border-radius: 0 0 4px 4px;
+}
+
+.checkbox:first-child,
+legend + .checkbox {
+  margin-top: 10px;
+}
+.checkbox:last-child {
+  margin-bottom: 10px;
+}
+.checkbox input[type="radio"] {}
+.checkbox input[type="radio"] + label {}
+.checkbox input[type="checkbox"] {}
+.checkbox input[type="checkbox"] + label {}
+
+form button:focus,
+.input-group:focus-within,
+.input:focus-within {
+  border-color: var(--focus-border);
+  box-shadow:
+    1px 1px 1px var(--focus-border),
+    -1px 1px 1px var(--focus-border),
+    -1px -1px 1px var(--focus-border),
+    1px -1px 1px var(--focus-border);
+}
+.input-group .checkbox:focus-within label {
+  border-bottom: 2px solid var(--focus-border);
+}
+
+form button.cancel:focus {
+  border-color: var(--warning);
+  box-shadow:
+    1px 1px 1px var(--warning),
+    -1px 1px 1px var(--warning),
+    -1px -1px 1px var(--warning),
+    1px -1px 1px var(--warning);
+}
+form button.delete:focus {
+  border-color: var(--danger);
+  box-shadow:
+    1px 1px 1px var(--danger),
+    -1px 1px 1px var(--danger),
+    -1px -1px 1px var(--danger),
+    1px -1px 1px var(--danger);
+}
+form button.submit:focus {
+  border-color: var(--success);
+  box-shadow:
+    1px 1px 1px var(--success),
+    -1px 1px 1px var(--success),
+    -1px -1px 1px var(--success),
+    1px -1px 1px var(--success);
+}
+
+form button {
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+form button,
+form button {
+  margin: 5px 0;
+  cursor: pointer;
+  width: 100%;
+  padding: 5px 20px;
+
+  border: 1px solid #999;
+  border-radius: 5px;
+
+  background-color: #FFF;
+
+  color: #555;
+  line-height: normal;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+form button.cancel {
+  width: 20%;
+  display: inline-block;
+}
+form button.cancel + button.delete {
+  width: 20%;
+  display: inline-block;
+  float: right;
+}
+form button:hover {
+  background-color: #EEE;
+}
+form button:active {
+  background-color: var(--focus-border);
+  color: white;
+}
+
+form button.cancel:active {
+  background-color: var(--warning);
+  color: var(--warning-text);
+}
+form button.submit:active {
+  background-color: var(--success);
+  color: var(--success-text);
+}
+form button.delete:active {
+  background-color: var(--danger);
+  color: var(--danger-text);
+}
+
+
+/***************
+** MESSAGES
+*/
+
+.messages .message {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px 10px;
+}
+.messages .message:first-child {
+  border-radius: 4px 4px 0 0;
+}
+.messages .message:last-child {
+  border-radius: 0 0 4px 4px;
+}
+.messages .message:first-child:last-child {
+  border-radius: 4px;
+}
+.messages .message .debug {
+  margin: 10px 5px 5px 5px;
+  font-size: 12px;
+  font-family: monospace;
+  padding: 5px 10px;
+  background: white;
+  color: black;
+  border-radius: 3px;
+}
+
+.message {
+  background-color: #EEE;
+  color: #666;
+}
+.message .debug {
+
+}
+.message.-success {
+  background-color: var(--success, #900);
+  color: var(--success-text, white)
+}
+.message.-error {
+  background-color: var(--danger, #900);
+  color: var(--danger-text, white)
+}
+.message.-warning {
+  background-color: var(--warning, #e92);
+  color: var(--warning-text, white)
+}
+.message.-info {
+  background-color: var(--info, #49e);
+  color: var(--info-text, white)
+}
+
+
+/***************
+** LISTS
+*/
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ 
+li {
+  margin: -1px 0 0 0;
+}
+ 
+li:last-child {
+  border: none;
+}
+ 
+li a {
+  border: 1px solid #999;
+  position: relative;
+  height: auto;
+  text-decoration: none;
+  display: block;
+  color: #333;
+}
+
+nav li a {
+  padding: 10px;
+}
+li a div {
+  padding: 10px;
+}
+li a div:first-child {
+  background-color: #EEE;
+}
+li:first-child a div:first-child {
+  border-radius: 3px 3px 0 0;
+}
+li:first-child a {
+  border-radius: 5px 5px 0 0;
+}
+li:last-child a div:last-child {
+  border-radius: 0 0 3px 3px;
+}
+li:last-child a {
+  border-radius: 0 0 5px 5px;
+}
+li a:hover {
+  position: relative;
+  z-index: 1;
+  color: steelblue;
+  border-color: var(--focus-border);
+}
+li a:hover div:first-child {
+  background-color: #e0eff9;
+  color: #143668;
+  /* background-color: steelblue;
+  color: white; */
+}
+
+li:focus-within {
+  position: relative;
+  z-index: 1;
+}
+li a:focus {
+  border-color: var(--focus-border);
+  box-shadow:
+    1px 1px 1px var(--focus-border),
+    -1px 1px 1px var(--focus-border),
+    -1px -1px 1px var(--focus-border),
+    1px -1px 1px var(--focus-border);
+}
+
+.source
+.documentation {
+    border: 1px solid #999;
+    position: relative;
+    height: auto;
+    text-decoration: none;
+    display: block;
+    color: #333;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.source code,
+.documentation code {
+  font-family: monospace;
+  white-space: pre;
+}
+
