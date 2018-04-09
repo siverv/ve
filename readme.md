@@ -58,7 +58,7 @@ All attribute names are written in the usual HTML-way, using double quotes, with
 
 The configuration object also includes lists of tag-names for empty elements (`br`, `input`, etc) which do not display its children, and preformatted elements (`textarea`, `pre`) which filters away non-string children.
 
-```javascript
+```jsx
 const Ve = require('koa-ve');
 async function MyDiv (ctx) {
   return <div {...this.attr} class={"my-div " + this.attr.class}>
@@ -72,7 +72,7 @@ async function MyDiv (ctx) {
 
 The following example can be found as `small-demo/demo.jsx`.
 
-```javascript
+```jsx
 const Koa = require('koa');
 const Ve = require('koa-ve');
  
