@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    ["@babel/plugin-transform-react-jsx",
+      {
+        "pragma": "Ve.component",
+        "pragmaFrag": "true",
+        "useBuiltIns": true,
+      }
+    ]
+  ],
+}

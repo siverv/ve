@@ -1,7 +1,7 @@
-.gitignore
-node_modules/
-node_modules/*
-small-demo/
-small-demo/*
-large-demo/
-large-demo/*
+.git
+node_modules
+old
+test
+benchmark
+demo
+src

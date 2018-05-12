@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "name": "ve-demo-small",
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {
+    "start": "babel demo.jsx --out-file demo.js && node demo.js"
+  },
+  "author": "siverv",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.46",
+    "@babel/cli": "^7.0.0-beta.46",
+    "@babel/plugin-transform-react-jsx": "^7.0.0-beta.46"
+  },
+  "dependencies": {
+    "koa": "^2.5.0",
+    "ve": "file:../../"
+  }
+}

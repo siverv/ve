@@ -1,30 +1,27 @@
 
 
 ## Vé
-### Asynchronous server side rendering of [JSX](https://babeljs.io/docs/plugins/transform-react-jsx/) using [Koa](http://koajs.com/)
+### Asynchronous stringification of [JSX](https://babeljs.io/docs/plugins/transform-react-jsx/)
 
-React's JSX is a pleasant enough way to write HTML, but when rendering server side, the whole shebang with states and JS-style attributes is needlessly complicated. Vé, named after the norse god who gave the original stick-figure-humans shapes and senses, is a small project to give simple JSX-support through Koa without distraction.
+React's JSX is a pleasant enough way to write HTML, but when rendering server side, the whole shebang with states and JS-style attributes is needlessly complicated and not particularily suitable for asynchronous functions. Vé, named after the norse god who gave the original stick-figure-humans shapes and senses, is a small project to give simple async JSX-support on the server.
 
-```sh
-npm install --save koa-ve
-```
+An earlier version exists on npm as `koa-ve`, but as it has been made into a more general method of rendering as strings, this will not be updated. No new package on npm has been planned as of yet.
 
-#### Configured for [Koa](http://koajs.com/)
+#### Made for use with [Koa](http://koajs.com/)
 
-The renderer is written with Koa's `ctx` and `next` in mind. While technically not a requirement, the alternative is to write your own middleware using `Ve.engine`, which takes a writable stream and the component to render as its first two arguments. All later arguments will be available to the component-functions.
+The renderer is written with Koa's `ctx` and `next` in mind. This is not a requirement, as both `ve.stringify` and `ve.beautify` are available to give you the resulting HTML as plain strings with and without indentation, but this requires you to supply your own `ctx` object. At the moment, only the optional `ve.try` uses this object internally, and that is simply to set `ctx.state.error` in the event of a caught error.
 
-```sh
-npm install --save koa
+###### Use as middleware
+
+```javascript
+app.use(require('ve').render)
 ```
 
 #### Better with [Babel](https://babeljs.io/) and its [React/JSX transformation plugin](https://babeljs.io/docs/plugins/transform-react-jsx/)
 
-```sh
-npm install --save-dev babel-cli babel-plugin-transform-react-jsx
-```
 
 The difference between
-```javascript
+```jsx
 <div class="my-div">hello world</div>
 ```
 and
@@ -32,7 +29,8 @@ and
 Ve.component("div", {class: "my-div"}, "hello world");
 ```
 is quite noticable, after all.
-#### Configure .babelrc
+
+###### Configure .babelrc
 
 ```json
 {
@@ -46,12 +44,7 @@ is quite noticable, after all.
 }
 ```
 
-
-#### Use as middleware
-
-```javascript
-app.use(require('koa-ve').render)
-```
+If using Babel 7, there is fragment support using `"pragmaFrag": "true"`. Otherwise, fragments are supported easily enough by `const Fragment = true;`, as using booleans as tags allowed.
 
 #### Write HTML components with JSX
 All attribute names are written in the usual HTML-way, using double quotes, with the value's double-quotes escaped. There is white-list of valid attribute names in `Ve.config` taken from [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes) which determines what will be visible, also allowing `/^data-[\w-]*$/` and `/^on\w+$/`.
@@ -59,7 +52,7 @@ All attribute names are written in the usual HTML-way, using double quotes, with
 The configuration object also includes lists of tag-names for empty elements (`br`, `input`, etc) which do not display its children, and preformatted elements (`textarea`, `pre`) which filters away non-string children.
 
 ```jsx
-const Ve = require('koa-ve');
+const Ve = require('ve');
 async function MyDiv (ctx) {
   return <div {...this.attr} class={"my-div " + this.attr.class}>
     {this.children}
@@ -73,9 +66,34 @@ async function MyDiv (ctx) {
 The following example can be found as `small-demo/demo.jsx`.
 
 ```jsx
-const Koa = require('koa');
-const Ve = require('koa-ve');
+const Ve = require('ve');
  
+async function B (ctx) {
+  await new Promise((ok) => setTimeout(ok, 20));
+  return <>
+    <b>hello</b>
+    <i>hello</i>
+    <u>hello</u>
+  </>
+}
+
+function A (ctx) {
+  return new Promise(
+    (ok) => setTimeout(() => ok(<B/>), 10)
+  );
+}
+
+function Child (ctx) {
+  return <h3>
+    {this.children}
+    to
+    <i>
+      {this.attr.name}
+    </i>
+    as well
+  </h3>
+}
+
 async function Component (ctx) {
   ctx.state.title = "Component - " + ctx.state.title;
   await new Promise((ok) => setTimeout(ok, 100))
@@ -89,7 +107,13 @@ async function Component (ctx) {
       <main data-name={'"you"'} custom-attributes="will be hidden by default">
         <Child name={"you"}> 
           Hello
+          <div>
+            <A/>
+          </div>
         </Child>
+        <button class="blueable" onClick="MakeBlue(this)">
+          Blue
+        </button>
       </main>
       <footer>
           &copy; 2018
@@ -98,20 +122,8 @@ async function Component (ctx) {
   )
 }
  
-function Child () {
-  return <h3>
-    {this.children}
-    to
-    <i>
-      {this.attr.name}
-    </i>
-    as well
-  </h3>
-}
  
-const app = new Koa();
-app.use(Ve.render);
-app.use(async (ctx, next) => {
+const Frame = async (ctx, next) => {
   ctx.state.title = "Vé"
   let children = await next();
   return (
@@ -131,21 +143,43 @@ h1 {
   color: steelblue;
   font-weight: normal;
 }
+.blue {
+  border: 2px solid black;
+  background-color: steelblue;
+  color: white;
+}
+.blueable:after { content: "?"; }
+.blue:after { content: "!"; }
 `}
         </style>
+        <script>
+{`
+function MakeBlue (element) {
+  if(element.classList.contains("blue")){
+    element.classList.remove("blue");
+  } else {
+    element.classList.add("blue");
+  }
+}
+`}
+        </script>
       </head>
       <body>
         {children}
       </body>
     </html>
   )
-})
- 
+}
+
+const Koa = require('koa');
+const app = new Koa();
+app.use(Ve.render);
+app.use(Frame);
 app.use(Component);
 app.listen(3000);
 ```
 
-And finally the source, as available to the browser:
+And finally the source, as available to the browser with `ve.beautify`:
 
 ```html
 <!DOCTYPE html>
@@ -165,8 +199,26 @@ h1 {
   color: steelblue;
   font-weight: normal;
 }
+.blue {
+  border: 2px solid black;
+  background-color: steelblue;
+  color: white;
+}
+.blueable:after { content: "?"; }
+.blue:after { content: "!"; }
 
     </style>
+    <script>
+      
+function MakeBlue (element) {
+  if(element.classList.contains("blue")){
+    element.classList.remove("blue");
+  } else {
+    element.classList.add("blue");
+  }
+}
+
+    </script>
   </head>
   <body>
     <div class="component">
@@ -178,12 +230,26 @@ h1 {
       <main data-name="&quot;you&quot;">
         <h3>
           Hello
+          <div>
+            <b>
+              hello
+            </b>
+            <i>
+              hello
+            </i>
+            <u>
+              hello
+            </u>
+          </div>
           to
           <i>
             you
           </i>
           as well
         </h3>
+        <button class="blueable" onClick="MakeBlue(this)">
+          Blue
+        </button>
       </main>
       <footer>
         © 2018

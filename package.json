@@ -1,8 +1,11 @@
 {
-  "name": "koa-ve",
-  "version": "1.0.1",
-  "description": "Vé: asynchronous server side rendering of JSX using Koa",
-  "main": "index.js",
+  "private": true,
+  "name": "ve",
+  "version": "1.1.0",
+  "description": "Asynchronous stringification of JSX",
+  "scripts": {
+    "build": "rollup --config rollup.config.js"
+  },
   "author": "siverv",
   "license": "ISC",
   "repository": {

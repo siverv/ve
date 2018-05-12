@@ -1,63 +1,12 @@
-'use strict';
+"use strict"
 
-var config = {
-  beautify: true,
-  doctype: "<!DOCTYPE html>\n",
-  voidElements: [
-    'area','base','br','col','command','embed','hr','img','input',
-    'keygen','link','menuitem','meta','param','source','track','wbr'
-  ],
-  preElements: ['pre', 'textarea'],
-  validAttributeNames: [
-    "accept","accept-charset","accesskey","action","align",
-    "alt","async","autocapitalize","autocomplete","autofocus",
-    "autoplay","bgcolor","border","buffered","challenge","charset",
-    "checked","cite","class","code","codebase","color","cols","colspan",
-    "content","contenteditable","contextmenu","controls","coords",
-    "crossorigin","data",/^data-[\w-]*$/,"datetime","default","defer","dir",
-    "dirname","disabled","download","draggable","dropzone","enctype",
-    "for","form","formaction","headers","height","hidden","high","href",
-    "hreflang","http-equiv","icon","id","integrity","ismap","itemprop",
-    "keytype","kind","label","lang","language","list","loop","low","manifest",
-    "max","maxlength","minlength","media","method","min","multiple","muted",
-    "name","novalidate",/^on\w+$/,"open","optimum","pattern","ping","placeholder",
-    "poster","preload","radiogroup","readonly","rel","required","reversed",
-    "rows","rowspan","sandbox","scope","scoped","seamless","selected","shape",
-    "size","sizes","slot","span","spellcheck","src","srcdoc","srclang",
-    "srcset","start","step","style","summary","tabindex","target","title",
-    "type","usemap","value","width","wrap"
-  ]
-}
-
-const tagNameIsVoidElement = tagName => config.voidElements.includes(tagName);
-const tagNameIsPreElement = tagName => config.preElements.includes(tagName);
-const attributeNameIsValid = name => {
-  return config.validAttributeNames.some(attr => {
-    if(typeof attr === "string"){
-      return attr === name;
-    } else if(attr instanceof RegExp){
-      return attr.test(name);
-    }
-  })
-};
-
-const escapeAttributeQuotes = (str) => String(str).replace(/"/g, "&quot;");
-const constructTagString = (tagName, attr) => {
-  let tagString = [tagName];
-  for (let name in attr) {
-    if(attributeNameIsValid(name)){
-      if(typeof attr[name] == "boolean"){
-        if(attr[name]){
-          tagString.push(name);
-        }
-      } else if(attr[name] != null) {
-        let value = escapeAttributeQuotes(attr[name]);
-        tagString.push(name+'="'+value+'"');
-      }
-    }
-  }
-  return tagString.join(" ");
-};
+import config from './config';
+import {
+  attributeNameIsValid,
+  tagNameIsVoidElement,
+  tagNameIsPreElement,
+  constructTagString,
+} from './utils';
 
 function ve_process (component, ctx) {
   let res = [];
@@ -77,7 +26,8 @@ function ve_process (component, ctx) {
       return chain;
     } else if(typeof item === "function"){
       return internal(item(ctx));
-    } else if(typeof item === "boolean"); else {
+    } else if(typeof item === "boolean"){
+    } else {
       res.push(item);
     }
   }
@@ -146,7 +96,7 @@ async function ve_stringify (component, ctx) {
 async function ve_beautify (component, ctx) {
   let processed = await ve_process(component, ctx);
   let out = [];
-  let indent = "";
+  let indent = ""
   for(var i = 0; i < processed.length; i++){
     let part = processed[i];
     let match = part[0] === "<" && part[part.length-1] === ">";
@@ -164,8 +114,8 @@ async function ve_beautify (component, ctx) {
 
 async function ve_koa_middleware (ctx, next) {
   let render = config.beautify ? ve_beautify : ve_stringify;
-  ctx.set('Content-Type', 'text/html; charset=utf-8');
-  ctx.status = 200;
+  ctx.set('Content-Type', 'text/html; charset=utf-8')
+  ctx.status = 200
   let component = await next();
   if(component){
     let content = await render(component, ctx);
@@ -173,7 +123,7 @@ async function ve_koa_middleware (ctx, next) {
   }
 }
 
-var ve = {
+export default {
   config,
   utils: {
     attributeNameIsValid,
@@ -192,5 +142,3 @@ var ve = {
   idem: ve_idem,
   try: ve_try,
 }
-
-module.exports = ve;
